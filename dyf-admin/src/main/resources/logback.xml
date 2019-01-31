@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+    <!-- 日志级别: FATAL > ERROR > WARN > INFO > DEBUG -->
+    <!--定义日志文件的存储地址-->
+    <property name="logHome" value="E:/springboot/log"/>
+    <!--定义错误日志文件的存储地址-->
+    <property name="logErrorHome" value="E:/springboot/errorLog"/>
+    <!-- 模块名 -->
+    <property name="logModuleName" value="demo"/>
+    <!-- 日志保留天数,一般不用,都留着的呀 -->
+    <property name="logMaxHistory" value="60"/>
+    <!-- 单个文件最大size(很小时10k 分割不是很准呀) -->
+    <property name="logSingleMaxSize" value="100MB"/>
+    <!-- 日志文件总共size ,一般也不用, 我试了,不好使,不删除旧的文件-->
+    <property name="logTotalMaxSize" value="20G"/>
+
+    <!-- magenta:洋红 boldMagenta:粗红 cyan:青色 white:白色 yellow: blue,black,gray,red -->
+    <property name="consoleLogPattern"
+              value="%date{yyyy-MM-dd HH:mm:ss.SSS} %magenta(%-5level) [%cyan(%thread)] %logger.%blue(%method):%green(%L) --- %msg%n"/>
+    <!-- 日志格式 -->
+    <property name="fileLogPattern"
+              value="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method:%L -%msg%n"/>
+
+    <!--1.控制台输出 -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--encoder：对日志进行格式化 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${consoleLogPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 2.滚动文件info日志 -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤日志, 只记录非error日志: 拦截ERROR级别的日志。如果匹配到了，则禁用处理。如果不匹配，则接受，开始处理日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+
+        <File>${logHome}/${logModuleName}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--滚动策略一, 按天生成日志-->
+            <!-- 每天一归档 -->
+            <fileNamePattern>${logHome}/${logModuleName}.%d.%i.log</fileNamePattern>
+            <!-- 单个日志文件最多${logSingleMaxSize}, 保留${logMaxHistory}天, 但是文件总量不超过${logTotalMaxSize} -->
+            <maxFileSize>${logSingleMaxSize}</maxFileSize>
+            <!--<maxHistory>${logMaxHistory}</maxHistory>-->
+            <!-- <totalSizeCap>${logTotalMaxSize}</totalSizeCap>-->
+        </rollingPolicy>
+
+        <!-- 日志输出的文件的格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${fileLogPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 3.滚动文件error日志 -->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤日志, 只记录error日志  -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <File>${logErrorHome}/${logModuleName}.error.log</File>
+        <!--滚动策略一, 按天生成日志-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${logErrorHome}/${logModuleName}.error.%d.%i.log</fileNamePattern>
+            <!-- 单个日志文件最多${logSingleMaxSize}, 保留${logMaxHistory}天, 但是文件总量不超过${logTotalMaxSize} -->
+            <maxFileSize>${logSingleMaxSize}</maxFileSize>
+            <!--<maxHistory>${logMaxHistory}</maxHistory>-->
+            <!--<totalSizeCap>${logTotalMaxSize}</totalSizeCap>-->
+        </rollingPolicy>
+
+        <!-- 日志输出的文件的格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${fileLogPattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- mybatis sql 日志打印, name是包 -->
+    <!-- additivity作用在于 children-logger是否使用 rootLogger配置的appender进行输出。
+         false：表示只用当前logger的appender-ref。
+         true：表示当前logger的appender-ref和rootLogger的appender-ref都有效。 -->
+    <!-- 显示sql -->
+    <logger name="com.dyf.system.user.mapper" level="DEBUG"/>
+
+    <logger name="org.apache.tomcat" level="info"/>
+
+    <!-- 业务日志debug -->
+    <logger name="com.dyf" additivity="false" level="debug">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </logger>
+
+
+    <!-- 框架显示debug日志,控制台  -->
+    <logger name="org" additivity="false" level="info">
+        <appender-ref ref="consoleLog"/>
+    </logger>
+
+    <!-- 根 -->
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+
+</configuration>

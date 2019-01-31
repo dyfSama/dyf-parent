@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H+ 后台主题UI框架 - 空白页</title>
+    <meta name="keywords" content="keyworkdstext">
+    <meta name="description" content="dericsdfsddemo">
+
+    <link th:href="@{/static/images/logo/favicon.ico}" rel="shortcut icon">
+    <link th:href="@{/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/static/css/style.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/static/plugins/nprogress/nprogress.css}" type="text/css" rel="stylesheet">
+
+    <script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/content.min.js}"></script>
+    <script th:src="@{/static/plugins/nprogress/nprogress.js}"></script>
+
+</head>
+<!-- 灰色背景 -->
+<body class="gray-bg">
+<div class="middle-box text-center animated fadeInDown">
+    <h1>500</h1>
+    <h2 class="font-bold">服务器内部错误!</h2>
+
+    <div class="error-desc">
+        抱歉，页面好歉，火星了~
+    </div>
+</div>
+<script type="text/javascript">
+    NProgress.start();
+    window.onload = function () {
+        NProgress.done();
+    };
+</script>
+</body>
+
+</html>

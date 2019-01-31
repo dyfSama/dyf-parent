@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="/static/js/jquery-3.3.1.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script th:src="@{/static/assets/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/static/assets/plugins/bootstrap-4.0.0-dist/js/bootstrap.min.js}" type="text/javascript"></script>
+    <link th:href="@{/static/assets/plugins/bootstrap-4.0.0-dist/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<form action="">
+
+    <input type="text" th:value="${user.userName}">
+    <input type="text" th:value="${entityId}">
+    <p th:text="${user.id}"></p>
+
+</form>
+<table>
+    <th></th>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>useName</th>
+        <th>realname</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    </thead>
+
+    <thbody>
+        <tr th:each="user:${userList}">
+            <td th:text="${user.id}">a</td>
+            <td th:text="${user.userName}">b</td>
+            <td th:text="${user.realName}">c</td>
+            <td><a th:href="@{/system/user/delete(id=${user.id})}">delete</a></td>
+        </tr>
+    </thbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        alert(${entityId});
+        $.ajax({
+            url: "/dyf/system/log/list",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                console.dir(data);
+            },
+            error: function (data) {
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

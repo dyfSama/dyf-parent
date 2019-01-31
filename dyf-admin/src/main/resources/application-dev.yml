@@ -1,0 +1,115 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+#是否开启验证码登录
+login:
+  isVerifyCode: false
+  #密码错误重试次数 (没用到写死了)todo
+  retryLimit: 5
+
+spring:
+  #datasource
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.56.201:3306/dyfdb?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    ## 连接池信息
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: SELECT 'x' from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+  #reids
+  redis:
+    host: 192.168.56.201
+    password: root
+    port: 6379
+    jedis:
+      pool:
+        minIdle: 0
+        maxActive: 8
+        maxIdle: 8
+        maxWait: 5000
+  #thymelea模板配置
+  thymeleaf:
+    prefix: classpath:/templates/views/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    #热部署文件，页面不产生缓存，及时更新
+    cache: false
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+  #javamail
+  mail:
+    protocol: smtp
+    host: smtp.163.com
+    port: 465 #25
+    username: du_yafei@163.com
+    password: 900524duyafei
+    test-connection: false
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          auth: true
+          # 不设置下面的属性 565连不上
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+#mybatis-plus
+#mybatis-plus:
+#  mapper-locations: classpath:mapper/com/dyf/**/*.xml
+#  type-aliases-package: com.dyf.system.user.entity
+mybatis-plus:
+  global-config:
+    #mybatisplus 逻辑删除
+    db-config:
+      #逻辑删除字段, 1是删除
+      logic-delete-value: 1
+      #逻辑删除字段, 0是删除
+      logic-not-delete-value: 0
+
+#mybatis
+mybatis:
+  mapperLocations: classpath:mapper/com/dyf/**/*.xml
+  typeAliasesPackage: com.dyf.system.user.entity
+  configuration:
+    cacheEnabled: false
+# pagehelper 分页插件
+
+pagehelper:
+  auto-dialect: true
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+

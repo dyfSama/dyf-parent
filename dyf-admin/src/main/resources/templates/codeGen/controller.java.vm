@@ -1,0 +1,118 @@
+package ${package.Controller};
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import com.dyf.common.msg.MsgInfo;
+import com.dyf.common.page.TableDataInfo;
+import com.dyf.system.${package.ModuleName}.entity.${entity};
+import com.dyf.system.${package.ModuleName}.service.${table.serviceName};
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Controller
+@RequestMapping("/${cfg.parentmoduleName}/${package.ModuleName}")
+public class ${table.controllerName} extends ${superControllerClass} {
+
+    @Autowired
+    private ${table.serviceName} ${package.ModuleName}Service;
+
+    /**
+     * 跳转到list
+     */
+    @GetMapping("/toList")
+    public String toList() {
+        return "system/${package.ModuleName}/${package.ModuleName}List";
+    }
+
+    /**
+     * 跳转到表单页面
+     */
+    @GetMapping("/toForm")
+    public String toForm(Model model, ${entity} entity) {
+        if (StringUtils.isNotBlank(entity.getId())) {
+            model.addAttribute("entityId", entity.getId());
+            return "system/${package.ModuleName}/${package.ModuleName}Edit";
+        } else {
+            return "system/${package.ModuleName}/${package.ModuleName}Add";
+        }
+    }
+
+    /**
+     * 数据list
+     *
+     * @param request
+     * @param entity
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/list")
+    public TableDataInfo list(HttpServletRequest request, ${entity} entity) {
+        startPage(request);
+        //QueryWrapper<SysLog> queryWrapper = new QueryWrapper<SysLog>();
+        LambdaQueryWrapper<SysLog> queryWrapper = new QueryWrapper<SysLog>().lambda();
+        List<${entity}> dataList = ${package.ModuleName}Service.list(queryWrapper);
+        return getTableInfo(dataList);
+    }
+
+    /**
+     * 保存更新
+     *
+     * @param entity
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/save")
+    public MsgInfo save(${entity} entity) {
+        return getMsgInfo(${package.ModuleName}Service.saveOrUpdate(entity), MsgInfo.OPT_SAVE);
+    }
+
+    /**
+     * 删除单条
+     *
+     * @param ${package.ModuleName}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/delete")
+    public MsgInfo delete(${entity} entity) {
+        return getMsgInfo(${package.ModuleName}Service.removeById(entity.getId()), MsgInfo.OPT_DEL);
+    }
+
+    /**
+     * 获取单条记录
+     *
+     * @param ${package.ModuleName}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/get")
+    public ${entity} get(${entity} entity) {
+        return ${package.ModuleName}Service.getById(entity.getId());
+    }
+}

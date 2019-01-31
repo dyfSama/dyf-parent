@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyf.system.user.mapper.SysUserMapper">
+
+
+
+    <resultMap id="BaseResultMap" type="com.dyf.system.user.entity.SysUser">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="dept_id" property="deptId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="username" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realname" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="CHAR"/>
+        <result column="avatar" property="avatar" jdbcType="BLOB"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id
+        ,
+        dept_id,
+        user_name,
+        real_name,
+        password,
+        mobile,
+        email,
+        gender,
+        /*        avatar,
+        */ birthday,
+        status,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks
+    </sql>
+
+
+</mapper>
