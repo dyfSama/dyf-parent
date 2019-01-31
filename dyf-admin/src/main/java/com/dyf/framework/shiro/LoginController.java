@@ -2,6 +2,7 @@ package com.dyf.framework.shiro;
 
 import com.dyf.common.contant.Contants;
 import com.dyf.common.msg.MsgInfo;
+import com.sun.xml.internal.bind.v2.TODO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,28 +54,32 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         // 验证用户
         String msg = "";
-        if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-            try {
-                // 执行登录
-                currentUser.login(token);
-            } catch (IncorrectCredentialsException e) {
-                msg = "登录密码错误";
-            } catch (ExcessiveAttemptsException e) {
-                msg = "登录失败次数过多";
-            } catch (LockedAccountException e) {
-                msg = "帐号已被锁定";
-            } catch (DisabledAccountException e) {
-                msg = "帐号已被禁用";
-            } catch (ExpiredCredentialsException e) {
-                msg = "帐号已过期";
-            } catch (UnknownAccountException e) {
-                msg = "帐号不存在";
-            } catch (UnauthorizedException e) {
-                msg = "您没有得到相应的授权！";
-            }
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        try {
+            // 执行登录
+            currentUser.login(token);
+        } catch (IncorrectCredentialsException e) {
+            msg = "登录密码错误";
+        } catch (ExcessiveAttemptsException e) {
+            msg = "登录失败次数过多";
+        } catch (LockedAccountException e) {
+            msg = "帐号已被锁定";
+        } catch (DisabledAccountException e) { //没用到
+            msg = "帐号已被禁用";
+        } catch (ExpiredCredentialsException e) { //没用到
+            msg = "帐号已过期";
+        } catch (UnknownAccountException e) {
+            msg = "帐号不存在";
+        } catch (UnauthorizedException e) {
+            msg = "您没有得到相应的授权！";
         }
-        return "".equals(msg) ? MsgInfo.success() : MsgInfo.error(msg);
+        // 验证是否登录成功!
+        if (currentUser.isAuthenticated()) {
+            //TODO 初始化各种资源
+            return MsgInfo.success();
+        } else {
+            return MsgInfo.error(msg);
+        }
     }
 
     /**

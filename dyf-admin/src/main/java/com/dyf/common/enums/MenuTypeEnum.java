@@ -10,8 +10,18 @@ package com.dyf.common.enums;
  */
 public enum MenuTypeEnum {
 
+    /**
+     * 目录
+     */
     CONTENTS("C", "目录"),
+    /**
+     * 菜单
+     */
     MENU("M", "菜单"),
+
+    /**
+     * 按钮
+     */
     BUTTON("B", "按钮");
 
     private final String code;

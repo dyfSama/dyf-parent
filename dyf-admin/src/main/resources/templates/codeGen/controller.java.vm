@@ -14,8 +14,8 @@ import ${superControllerClassPackage};
 #end
 import com.dyf.common.msg.MsgInfo;
 import com.dyf.common.page.TableDataInfo;
-import com.dyf.system.${package.ModuleName}.entity.${entity};
-import com.dyf.system.${package.ModuleName}.service.${table.serviceName};
+import ${cfg.parentPackage}.${package.ModuleName}.entity.${entity};
+import ${cfg.parentPackage}.${package.ModuleName}.service.${table.serviceName};
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -74,8 +74,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @PostMapping("/list")
     public TableDataInfo list(HttpServletRequest request, ${entity} entity) {
         startPage(request);
-        //QueryWrapper<SysLog> queryWrapper = new QueryWrapper<SysLog>();
-        LambdaQueryWrapper<SysLog> queryWrapper = new QueryWrapper<SysLog>().lambda();
+        //QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>();
+        LambdaQueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>().lambda();
         List<${entity}> dataList = ${package.ModuleName}Service.list(queryWrapper);
         return getTableInfo(dataList);
     }
@@ -93,7 +93,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     }
 
     /**
-     * 删除单条
+     * 删除单条(逻辑删除)
      *
      * @param ${package.ModuleName}
      * @return

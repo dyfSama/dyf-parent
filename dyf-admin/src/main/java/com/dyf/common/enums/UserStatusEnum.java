@@ -10,8 +10,18 @@ package com.dyf.common.enums;
  */
 public enum UserStatusEnum {
 
+    /**
+     * 正常
+     */
     NORMAL("0", "正常"),
+    /**
+     * 删除
+     */
     DELETE("1", "删除"),
+
+    /**
+     * 锁定
+     */
     LOCKED("2", "锁定");
 
     private final String code;

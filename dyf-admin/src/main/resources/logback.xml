@@ -96,6 +96,12 @@
         <appender-ref ref="fileErrorLog"/>
     </logger>
 
+    <!-- 代码生成器debug -->
+    <logger name="com.baomidou.mybatisplus.generator" additivity="false" level="debug">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </logger>
 
     <!-- 框架显示debug日志,控制台  -->
     <logger name="org" additivity="false" level="info">

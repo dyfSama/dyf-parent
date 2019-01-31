@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.dyf.**.mapper")
-public class DYFApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(DYFApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

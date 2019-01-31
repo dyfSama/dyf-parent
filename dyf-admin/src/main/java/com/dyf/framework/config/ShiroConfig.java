@@ -46,6 +46,17 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //权限认证失败
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+
+        loadShiroFilterChain(shiroFilterFactoryBean);
+        return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 加载shiroFilter权限控制规则(推荐从配置读取,或者从数据库读取)
+     *
+     * @param shiroFilterFactoryBean
+     */
+    private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean) {
         // 过滤链
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 静态资源
@@ -60,7 +71,6 @@ public class ShiroConfig {
         // 需要认证认证
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
     }
 
     /*
@@ -106,6 +116,18 @@ public class ShiroConfig {
         return shiroRealm;
     }
 
+    /*
+     * shiro缓存管理器;
+     * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
+     */
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        return cacheManager;
+    }
+
+
     @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -143,17 +165,6 @@ public class ShiroConfig {
         DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
         defaultAAP.setProxyTargetClass(true);
         return defaultAAP;
-    }
-
-    /*
-     * shiro缓存管理器;
-     * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
-     */
-    @Bean
-    public EhCacheManager ehCacheManager() {
-        EhCacheManager cacheManager = new EhCacheManager();
-        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-        return cacheManager;
     }
 
 }
