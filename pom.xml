@@ -45,30 +45,30 @@
 
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.dyf</groupId>
-                <artifactId>dyf-admin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dyf</groupId>
-                <artifactId>dyf-common</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dyf</groupId>
-                <artifactId>dyf-framework</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dyf</groupId>
-                <artifactId>dyf-system</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <!--<dependencyManagement>-->
+        <!--<dependencies>-->
+            <!--<dependency>-->
+                <!--<groupId>com.dyf</groupId>-->
+                <!--<artifactId>dyf-admin</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.dyf</groupId>-->
+                <!--<artifactId>dyf-common</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.dyf</groupId>-->
+                <!--<artifactId>dyf-framework</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.dyf</groupId>-->
+                <!--<artifactId>dyf-system</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
+        <!--</dependencies>-->
+    <!--</dependencyManagement>-->
 
     <dependencies>
 
@@ -239,6 +239,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

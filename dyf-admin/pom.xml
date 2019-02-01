@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- 项目说明-->
     <artifactId>dyf-admin</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>dyf-admin</name>
     <description>admin</description>
@@ -21,6 +21,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.dyf.Application</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
