@@ -3,7 +3,6 @@ package com.dyf.system.user.controller;
 import com.dyf.common.controller.BaseController;
 import com.dyf.common.msg.MsgInfo;
 import com.dyf.common.page.TableDataInfo;
-import com.dyf.framework.shiro.RetryLimitHashedCredentialsMatcher;
 import com.dyf.system.user.entity.SysUser;
 import com.dyf.system.user.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +34,8 @@ public class SysUserController extends BaseController {
     @Autowired
     private SysUserService userService;
 
-    @Autowired
-    private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
+//    @Autowired
+//    private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
 
     /**
      * 跳转到list
@@ -121,11 +120,11 @@ public class SysUserController extends BaseController {
      * @param user
      * @return
      */
-    @ResponseBody
-    @PostMapping("unlock")
-    public MsgInfo unlock(SysUser entity) {
-
-        retryLimitHashedCredentialsMatcher.unlockAccount(entity);
-        return MsgInfo.success();
-    }
+//    @ResponseBody
+//    @PostMapping("unlock")
+//    public MsgInfo unlock(SysUser entity) {
+//
+//        retryLimitHashedCredentialsMatcher.unlockAccount(entity);
+//        return MsgInfo.success();
+//    }
 }
